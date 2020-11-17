@@ -112,12 +112,8 @@ export async function startServer(opts: Options): Promise<{ done: Promise<void> 
   const app = await makeServer(opts);
 
   let server: http.Server;
-  await new Promise((resolve, reject) => {
-    server = app.listen(opts.port, opts.bindAddress, (err: any) => {
-      if (err) {
-        reject(err);
-        return;
-      }
+  await new Promise((resolve) => {
+    server = app.listen(opts.port, opts.bindAddress, () => {
       logger.info(`Running on ${opts.bindAddress}:${opts.port}`);
       resolve();
     });
